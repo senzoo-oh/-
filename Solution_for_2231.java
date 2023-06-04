@@ -3,12 +3,12 @@ import java.util.Scanner;
 
 public class Solution_for_2231 {
     
-    static Scanner in = new Scanner(System.in);
-    static int sum;
-    static ArrayList<Integer> sum_array = new ArrayList<>();
+    Scanner in = new Scanner(System.in);
+    int sum = 0;
+    ArrayList<Integer> sum_array = new ArrayList<>();
 
     // 인덱스를 찾는 메서드 선언
-    static void findIndex(ArrayList l) {
+    public static void findIndex(ArrayList l) {
 
         Integer N = Integer.valueOf(in.nextInt());
 
@@ -34,7 +34,6 @@ public class Solution_for_2231 {
             sum += i;
             sum_array.add(sum);
         }
-        System.out.println(sum_array);
         findIndex(sum_array);
     }
 }
