@@ -32,15 +32,8 @@ public class Solution_for_9251 {
             return;
         }
 
-        for (int j = containWord2+1; j < col+1; j++) {
-            length[1][j] = 1;
-        }
-        for (int i = containWord1+1; i < row+1; i++) {
-            length[i][1] = 1;
-        }
-
-        for (int i = 2; i < row+1; i++) {
-            for (int j = 2; j < col+1; j++) {
+        for (int i = 1; i < row+1; i++) {
+            for (int j = 1; j < col+1; j++) {
                 if (word2[i] == word1[j])
                     length[i][j] = length[i-1][j-1]+1;
                 else {
@@ -48,14 +41,14 @@ public class Solution_for_9251 {
                 }
             }
         }
-        // StringBuilder sb = new StringBuilder();
-        // for (int i = 0; i < row+1; i++) {
-        //     for (int j = 0; j < col+1; j++) {
-        //         sb.append(length[i][j] + " ");
-        //     }
-        //     sb.append("\n");
-        // }
-        // System.out.println(sb);
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < row+1; i++) {
+            for (int j = 0; j < col+1; j++) {
+                sb.append(length[i][j] + " ");
+            }
+            sb.append("\n");
+        }
+        System.out.println(sb);
         System.out.println(length[row][col]);
     }
 }
