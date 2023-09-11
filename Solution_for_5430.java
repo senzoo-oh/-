@@ -29,7 +29,7 @@ public class Solution_for_5430 {
                 if (instruction == 'R') numOfR++;
                 
                 else {
-                    if (deque.isEmpty() || deque.peek().equals("")){
+                    if (deque.peek()==null || deque.peek().equals("")){
                         answer.append("error\n");
                         continue outerloop;
                     }
