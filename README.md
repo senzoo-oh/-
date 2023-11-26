@@ -1,2 +1,4 @@
 # AlgorithmTest
-알고리즘 문제풀이
+
+
+[![Solved.ac Profile](http://mazassumnida.wtf/api/v2/generate_badge?boj=senzoo)](https://solved.ac/senzoo/)
