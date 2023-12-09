@@ -24,36 +24,31 @@ public class Solution_for_12100 {
             int foundValue = 0;
 
             for (int j = 0; j < N; j++) {
-                // 값이 존재하고 자신의 앞에 값이 없을 때
                 if (copyBoard[j][i] != 0 && !isFoundValue) {
                     isFoundValue = true;
                     foundValue = copyBoard[j][i];
-                    copyBoard[j][i] = 0;
                 }
                 else if (copyBoard[j][i] != 0 && isFoundValue) {
                     if (foundValue == copyBoard[j][i]) {
                         int sum = foundValue + copyBoard[j][i];
-                        isFoundValue = false;
-                        copyBoard[j][i] = 0;
-                        copyBoard[index][i] = sum;
+                        copyBoard[j][index] = sum;
                         index++;
+                        isFoundValue = false;
                     }
                     else {
-                        copyBoard[index][i] = foundValue;
+                        copyBoard[j][index] = foundValue;
                         foundValue = copyBoard[j][i];
                         index++;
-                        copyBoard[j][i] = 0;
                     }
                 }
                 else continue;
             }
-            if (isFoundValue) copyBoard[index][i] = foundValue;
         }
         return copyBoard;
     }
     public static int[][] mergeDown(int[][] copyBoard) {
         for (int i = 0; i < N; i++) {
-            int index = N-1;
+            int index = 0;
             boolean isFoundValue = false;
             int foundValue = 0;
 
@@ -61,26 +56,22 @@ public class Solution_for_12100 {
                 if (copyBoard[j][i] != 0 && !isFoundValue) {
                     isFoundValue = true;
                     foundValue = copyBoard[j][i];
-                    copyBoard[j][i] = 0;
                 }
                 else if (copyBoard[j][i] != 0 && isFoundValue) {
                     if (foundValue == copyBoard[j][i]) {
                         int sum = foundValue + copyBoard[j][i];
+                        copyBoard[j][index] = sum;
+                        index++;
                         isFoundValue = false;
-                        copyBoard[j][i] = 0;
-                        copyBoard[index][i] = sum;
-                        index--;
                     }
                     else {
-                        copyBoard[index][i] = foundValue;
+                        copyBoard[j][index] = foundValue;
                         foundValue = copyBoard[j][i];
-                        index--;
-                        copyBoard[j][i] = 0;
+                        index++;
                     }
                 }
                 else continue;
             }
-            if (isFoundValue) copyBoard[index][i] = foundValue;
         }
         return copyBoard;
     }
@@ -94,32 +85,28 @@ public class Solution_for_12100 {
                 if (copyBoard[i][j] != 0 && !isFoundValue) {
                     isFoundValue = true;
                     foundValue = copyBoard[i][j];
-                    copyBoard[i][j] = 0;
                 }
                 else if (copyBoard[i][j] != 0 && isFoundValue) {
                     if (foundValue == copyBoard[i][j]) {
                         int sum = foundValue + copyBoard[i][j];
-                        isFoundValue = false;
-                        copyBoard[i][j] = 0;
                         copyBoard[i][index] = sum;
                         index++;
+                        isFoundValue = false;
                     }
                     else {
                         copyBoard[i][index] = foundValue;
                         foundValue = copyBoard[i][j];
                         index++;
-                        copyBoard[i][j] = 0;
                     }
                 }
                 else continue;
             }
-            if (isFoundValue) copyBoard[i][index] = foundValue;
         }
         return copyBoard;
     }
     public static int[][] mergeRight(int[][] copyBoard) {
         for (int i = 0; i < N; i++) {
-            int index = N-1;
+            int index = 0;
             boolean isFoundValue = false;
             int foundValue = 0;
 
@@ -127,61 +114,48 @@ public class Solution_for_12100 {
                 if (copyBoard[i][j] != 0 && !isFoundValue) {
                     isFoundValue = true;
                     foundValue = copyBoard[i][j];
-                    copyBoard[i][j] = 0;
                 }
                 else if (copyBoard[i][j] != 0 && isFoundValue) {
                     if (foundValue == copyBoard[i][j]) {
                         int sum = foundValue + copyBoard[i][j];
-                        isFoundValue = false;
-                        copyBoard[i][j] = 0;
                         copyBoard[i][index] = sum;
-                        index--;
+                        index++;
+                        isFoundValue = false;
                     }
                     else {
                         copyBoard[i][index] = foundValue;
                         foundValue = copyBoard[i][j];
-                        index--;
-                        copyBoard[i][j] = 0;
+                        index++;
                     }
                 }
                 else continue;
             }
-            if (isFoundValue) copyBoard[i][index] = foundValue;
         }
         return copyBoard;
     }
 
     public static void selectMove(int moveCount, int[][] board) {
         if(moveCount == COUNT) {
-            // System.out.println("new array");
-            // for (int i = 0; i < N; i++) {
-            //     for (int j = 0; j < N; j++) {
-            //         System.out.print(board[i][j]);
-            //     }
-            //     System.out.print(" ");
-            // }
             finalMax = Math.max(finalMax, findMaxValue(board));
             return;
         }
         else {
-            for (int d = 0; d < 4; d++) {
-                // 새로운 배열에 값 복사
-                int[][] copyBoard = new int[N][N];
-                for (int i = 0; i < N; i++) {
-                    for (int j = 0; j < N; j++) {
-                        copyBoard[i][j] = board[i][j];
-                    }
-                }
+            // 새로운 배열에 값 복사
+            int[][] copyBoard = new int[N][N];
+            for (int i = 0; i < N; i++) {
+                copyBoard[i] = Arrays.copyOf(board[i], N);
+            }
 
-                if (d==0) {
+            for (int i = 0; i < 4; i++) {
+                if (i==0) {
                     mergeUp(copyBoard);
                     selectMove(moveCount+1, copyBoard);
                 }
-                else if (d==1) {
+                else if (i==1) {
                     mergeDown(copyBoard);
                     selectMove(moveCount+1, copyBoard);
                 }
-                else if (d==2) {
+                else if (i==2) {
                     mergeLeft(copyBoard);
                     selectMove(moveCount+1, copyBoard);
                 }
@@ -207,12 +181,5 @@ public class Solution_for_12100 {
         }
         selectMove(0, board);
         System.out.println(finalMax);
-
-        // for (int i = 0; i < N; i++) {
-        //     for (int j = 0; j < N; j++) {
-        //         System.out.print(board[i][j]);
-        //     }
-        //     System.out.println();
-        // }
     }
 }
